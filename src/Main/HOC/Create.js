@@ -1,15 +1,11 @@
 import React, {Fragment} from 'react';
-import styled from 'styled-components';
 import {DiceContextConsumer} from '../../contexts/dicecontext';
-import {Button, Card} from '@material-ui/core';
 
-import WithRoller from './WithRoller';
+import RollerCard from './RollerCard';
 
-const CardStyled = styled(Card)`
-	padding: ${({theme}) => theme.spacing}px;
-`;
+//import WithRoller from './WithRoller';
 
-const CardWithRoller = WithRoller(CardStyled);
+//const CardWithRoller = WithRoller(CardStyled);
 
 //todo: need to find a way to add the HOC rolling functions to
 // the Card and allow the Button to call its
@@ -20,12 +16,7 @@ const Create = () => (
 			<Fragment>
 				<div>
 					{created.map((roller, i) => (
-						<CardWithRoller key={`roller${i}`}>
-							<div>Roller {i}</div>
-							<div>Rolls: {roller.number}</div>
-							<div>Sides: {roller.sides}</div>
-							<Button color="primary">Roll</Button>
-						</CardWithRoller>
+						<RollerCard key={`roller${i}`} roller={roller} index={i} />
 					))}
 				</div>
 				<div>Add Roller</div>

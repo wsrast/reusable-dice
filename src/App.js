@@ -34,7 +34,9 @@ class App extends Component {
 						<AppStyled>
 							<AppBar>
 								<Toolbar>
-									<Typography variant="h5">Reusable Dice</Typography>
+									<Typography variant="h5" color="inherit">
+										Reusable Dice
+									</Typography>
 								</Toolbar>
 							</AppBar>
 							<Main />
