@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Button, Card, Grid} from '@material-ui/core';
+import {Button, Card, CardActions, CardContent, Grid} from '@material-ui/core';
+import Typography from '@material-ui/core/es/Typography/Typography';
 
 const RollerStyled = styled(Card)`
 	margin: 0 ${({theme}) => theme.spacing}px ${({theme}) => theme.spacing}px 0;
-	padding: ${({theme}) => theme.spacing}px;
-	padding-top: 0;
+
 	width: calc(25% + 8px);
 `;
 
@@ -66,35 +66,39 @@ export default class RollerCard extends Component {
 
 		return (
 			<RollerStyled>
-				<Grid container>
-					<Grid item xs={12}>
-						<h4>Roller {index}</h4>
+				<CardContent>
+					<Grid container>
+						<Grid item xs={12}>
+							<h4>Roller {index}</h4>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<div>Rolls: {number}</div>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<div>Sides: {sides}</div>
+						</Grid>
+						<Grid item xs={12}>
+							<h5>Results:</h5>
+						</Grid>
+						<Grid item xs={12}>
+							<ULStyled>
+								{this.state.rolls.map((val, i) => (
+									<ItemStyled key={`roll${i}`}>{val} </ItemStyled>
+								))}
+							</ULStyled>
+						</Grid>
+						<Grid item>
+							<h5>Total: {this.getTotal()}</h5>
+						</Grid>
 					</Grid>
-					<Grid item xs={12} sm={6}>
-						<div>Rolls: {number}</div>
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						<div>Sides: {sides}</div>
-					</Grid>
-					<Grid item xs={12}>
-						<h5>Results:</h5>
-					</Grid>
-					<Grid item xs={12}>
-						<ULStyled>
-							{this.state.rolls.map((val, i) => (
-								<ItemStyled key={`roll${i}`}>{val} </ItemStyled>
-							))}
-						</ULStyled>
-					</Grid>
-					<Grid item>
-						<h5>Total: {this.getTotal()}</h5>
-					</Grid>
-					<Grid item xs={12}>
-						<Button variant="contained" onClick={this.handleRoll}>
-							Roll
-						</Button>
-					</Grid>
-				</Grid>
+				</CardContent>
+
+				<CardActions>
+					<Button onClick={this.handleRoll}>
+						<Typography>Roll</Typography>
+					</Button>
+					<Button color="primary">Save</Button>
+				</CardActions>
 			</RollerStyled>
 		);
 	}

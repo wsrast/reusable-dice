@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {DiceContextConsumer} from '../../contexts/dicecontext';
-import {Button} from '@material-ui/core';
-import {Add} from '@material-ui/icons';
 
 import RollerCard from './RollerCard';
+import CreateCard from './CreateCard';
 
 //import WithRoller from './WithRoller';
 
@@ -19,10 +18,6 @@ const FlexStyled = styled.section`
 	flex-flow: row wrap;
 `;
 
-const ButtonStyled = styled(Button)`
-	margin: 0 ${({theme}) => theme.spacing}px ${({theme}) => theme.spacing}px 0 !important;
-`;
-
 const Create = () => (
 	<DiceContextConsumer>
 		{({created, handleCreate}) => (
@@ -30,9 +25,7 @@ const Create = () => (
 				{created.map((roller, i) => (
 					<RollerCard key={`roller${i}`} roller={roller} index={i} />
 				))}
-				<ButtonStyled onClick={handleCreate} variant="outlined">
-					<Add />
-				</ButtonStyled>
+				<CreateCard handleCreate={handleCreate} />
 			</FlexStyled>
 		)}
 	</DiceContextConsumer>

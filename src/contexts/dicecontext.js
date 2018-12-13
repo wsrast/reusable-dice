@@ -24,7 +24,7 @@ export class DiceContextProvider extends Component {
 	 * Create a new roller based on config options
 	 * @param {Object} options - contains number, sides and modifier.
 	 */
-	handleCreate = (e, options = {number: 1, sides: 20}) => {
+	handleCreate = (options = {number: 1, sides: 20}) => {
 		this.setState((state) => {
 			console.log(`options `, options);
 			return {
