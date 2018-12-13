@@ -11,6 +11,26 @@ export class DiceContextProvider extends Component {
 				{
 					number: 1,
 					sides: 20
+				},
+				{
+					number: 2,
+					sides: 6
+				},
+				{
+					number: 2,
+					sides: 10
+				},
+				{
+					number: 2,
+					sides: 6
+				},
+				{
+					number: 2,
+					sides: 10
+				},
+				{
+					number: 5,
+					sides: 6
 				}
 			]
 		};

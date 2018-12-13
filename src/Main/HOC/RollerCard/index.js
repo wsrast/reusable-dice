@@ -3,8 +3,27 @@ import styled from 'styled-components';
 import {Button, Card, Grid} from '@material-ui/core';
 
 const RollerStyled = styled(Card)`
+	margin: 0 ${({theme}) => theme.spacing}px ${({theme}) => theme.spacing}px 0;
 	padding: ${({theme}) => theme.spacing}px;
 	padding-top: 0;
+	width: calc(25% + 8px);
+`;
+
+const ULStyled = styled.ul`
+	display: flex;
+	flex-flow: row wrap;
+	list-style: none;
+	padding: 0;
+`;
+
+const ItemStyled = styled.li`
+	border: 1px solid #009;
+	box-sizing: border-box;
+	display: inline-block;
+	flex: auto;
+	padding: 12px;
+	margin: 0 8px 8px 0;
+	text-align: center;
 `;
 
 export default class RollerCard extends Component {
@@ -19,10 +38,9 @@ export default class RollerCard extends Component {
 		} = this.props;
 		let ret = [];
 
-		console.log(`number: `, number, `sides: `, sides);
+		//console.log(`number: `, number, `sides: `, sides);
 
 		for (let n = 1; n <= number; n++) {
-			console.log(`rolled`);
 			ret.push(Math.ceil(Math.random() * sides));
 		}
 		this.setState({rolls: ret});
@@ -34,6 +52,10 @@ export default class RollerCard extends Component {
 			return acc + val;
 		}, 0);
 	};
+
+	componentDidMount() {
+		this.handleRoll();
+	}
 
 	render() {
 		const {
@@ -59,13 +81,11 @@ export default class RollerCard extends Component {
 						<h5>Results:</h5>
 					</Grid>
 					<Grid item xs={12}>
-						<Grid container>
+						<ULStyled>
 							{this.state.rolls.map((val, i) => (
-								<Grid item xs={12} sm={6} lg={3} key={`roll${i}`}>
-									{val}{' '}
-								</Grid>
+								<ItemStyled key={`roll${i}`}>{val} </ItemStyled>
 							))}
-						</Grid>
+						</ULStyled>
 					</Grid>
 					<Grid item>
 						<h5>Total: {this.getTotal()}</h5>
