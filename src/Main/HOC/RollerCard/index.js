@@ -14,6 +14,25 @@ export default class RollerCard extends Component {
 
 	handleRoll = () => {
 		console.log(`rolling`);
+		const {
+			roller: {number, sides}
+		} = this.props;
+		let ret = [];
+
+		console.log(`number: `, number, `sides: `, sides);
+
+		for (let n = 1; n <= number; n++) {
+			console.log(`rolled`);
+			ret.push(Math.ceil(Math.random() * sides));
+		}
+		this.setState({rolls: ret});
+	};
+
+	getTotal = () => {
+		const {rolls} = this.state;
+		return rolls.reduce((acc, val, i, arr) => {
+			return acc + val;
+		}, 0);
 	};
 
 	render() {
@@ -37,6 +56,21 @@ export default class RollerCard extends Component {
 						<div>Sides: {sides}</div>
 					</Grid>
 					<Grid item xs={12}>
+						<h5>Results:</h5>
+					</Grid>
+					<Grid item xs={12}>
+						<Grid container>
+							{this.state.rolls.map((val, i) => (
+								<Grid item xs={12} sm={6} lg={3} key={`roll${i}`}>
+									{val}{' '}
+								</Grid>
+							))}
+						</Grid>
+					</Grid>
+					<Grid item>
+						<h5>Total: {this.getTotal()}</h5>
+					</Grid>
+					<Grid item xs={12}>
 						<Button variant="contained" onClick={this.handleRoll}>
 							Roll
 						</Button>
@@ -46,14 +80,3 @@ export default class RollerCard extends Component {
 		);
 	}
 }
-
-/*const RollerCard = ({roller, index}) => (
-	<RollerStyled>
-		<h4>Roller {index}</h4>
-		<div>Rolls: {roller.number}</div>
-		<div>Sides: {roller.sides}</div>
-		<Button variant="contained" onClick={this.handleRoll}>Roll</Button>
-	</RollerStyled>
-);
-
-export default RollerCard;*/
