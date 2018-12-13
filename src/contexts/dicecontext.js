@@ -15,26 +15,24 @@ export class DiceContextProvider extends Component {
 				{
 					number: 2,
 					sides: 6
-				},
-				{
-					number: 2,
-					sides: 10
-				},
-				{
-					number: 2,
-					sides: 6
-				},
-				{
-					number: 2,
-					sides: 10
-				},
-				{
-					number: 5,
-					sides: 6
 				}
 			]
 		};
 	}
+
+	/**
+	 * Create a new roller based on config options
+	 * @param {Object} options - contains number, sides and modifier.
+	 */
+	handleCreate = (e, options = {number: 1, sides: 20}) => {
+		this.setState((state) => {
+			console.log(`options `, options);
+			return {
+				...state,
+				created: [...state.created, options]
+			};
+		});
+	};
 
 	render() {
 		const {children} = this.props;
@@ -42,7 +40,8 @@ export class DiceContextProvider extends Component {
 		return (
 			<DiceContext.Provider
 				value={{
-					...this.state
+					...this.state,
+					handleCreate: this.handleCreate
 				}}
 			>
 				{children}

@@ -32,7 +32,6 @@ export default class RollerCard extends Component {
 	};
 
 	handleRoll = () => {
-		console.log(`rolling`);
 		const {
 			roller: {number, sides}
 		} = this.props;
