@@ -1,7 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {Button, Card, CardActions, CardContent, Grid} from '@material-ui/core';
 import Typography from '@material-ui/core/es/Typography/Typography';
+
+import {
+	lifecycle,
+	withState,
+	withProps,
+	withHandlers,
+	compose
+} from 'recompose';
 
 const RollerStyled = styled(Card)`
 	margin: 0 ${({theme}) => theme.spacing}px ${({theme}) => theme.spacing}px 0;
@@ -26,6 +34,81 @@ const ItemStyled = styled.li`
 	text-align: center;
 `;
 
+const handleRoll = ({roller: {number, sides}, setRolls}) => {
+	let ret = [];
+
+	for (let n = 1; n <= number; n++) {
+		ret.push(Math.ceil(Math.random() * sides));
+	}
+	setRolls(ret);
+};
+
+const getTotal = (rolls) => {
+	return rolls.reduce((acc, val, i, arr) => {
+		return acc + val;
+	}, 0);
+};
+
+const enhance = compose(
+	withState('rolls', 'setRolls', []),
+	withProps({getTotal}),
+	withHandlers({
+		handleRoll: (props) => () => handleRoll(props)
+	}),
+	lifecycle({
+		componentDidMount() {
+			this.props.handleRoll(this.props);
+		}
+	})
+);
+
+const Renderer = ({
+	index,
+	roller: {number, sides},
+	getTotal,
+	handleRoll,
+	rolls
+}) => (
+	<RollerStyled>
+		<CardContent>
+			<Grid container>
+				<Grid item xs={12}>
+					<h4>Roller {index}</h4>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<div>Rolls: {number}</div>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<div>Sides: {sides}</div>
+				</Grid>
+				<Grid item xs={12}>
+					<h5>Results:</h5>
+				</Grid>
+				<Grid item xs={12}>
+					<ULStyled>
+						{rolls.map((val, i) => (
+							<ItemStyled key={`roll${i}`}>{val} </ItemStyled>
+						))}
+					</ULStyled>
+				</Grid>
+				<Grid item>
+					<h5>Total: {getTotal(rolls)}</h5>
+				</Grid>
+			</Grid>
+		</CardContent>
+
+		<CardActions>
+			<Button onClick={handleRoll}>
+				<Typography>Roll</Typography>
+			</Button>
+			<Button color="primary">Save</Button>
+		</CardActions>
+	</RollerStyled>
+);
+
+export default enhance(Renderer);
+
+/*
 export default class RollerCard extends Component {
 	state = {
 		rolls: []
@@ -103,3 +186,4 @@ export default class RollerCard extends Component {
 		);
 	}
 }
+*/
